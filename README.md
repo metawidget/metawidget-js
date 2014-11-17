@@ -1,8 +1,22 @@
 # metawidget-js
 
-Metawidget is a pluggable Javascript Form Generator. It comes with plug-ins for many input formats
-(JSON objects, JSON schema, REST calls etc) and output targets (Angular, Bootstrap, JQuery Mobile, Node etc)
-or you can easily add your own.
+Metawidget is a pluggable Javascript Form Generator.
+
+It comes with plug-ins for many input formats...
+
+ * JSON objects
+ * JSON Schema
+ * REST calls; etc
+ 
+...and output targets...
+
+ * Angular
+ * Bootstrap
+ * JQuery UI
+ * JQuery Mobile
+ * Node; etc
+ 
+...or you can easily add your own.
 
 ## Quick Start
 
@@ -24,8 +38,7 @@ Or make it even easier with frameworks such as Angular:
 
 Or JQuery Mobile:
 
-    $( '#metawidget' ).metawidget();
-    $( '#metawidget' ).metawidget( 'buildWidgets', person );
+    $( '#metawidget' ).metawidget().metawidget( 'buildWidgets', person );
     
 Metawidget will generate all HTML boilerplate for your form, tailored to your preferred layout. Such as Bootstrap:
 
