@@ -1,0 +1,45 @@
+<html ng-app="myApp">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js" type="text/javascript"></script>
+		<script src="http://metawidget.org/js/4.0/metawidget-core.min.js" type="text/javascript"></script>
+		<script src="http://metawidget.org/js/4.0/metawidget-angular.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			angular.module( 'myApp', [ 'metawidget' ] )
+				.controller( 'myController', function( $scope ) {
+					$scope.person = {
+						firstname: 'Homer',
+						surname: 'Simpson',
+						age: 36
+					};
+					$scope.save = function() {
+						console.log( $scope.person );
+					}
+				} );
+		</script>
+		<style>
+			p {
+				text-align: center;
+			}			
+			#metawidget {
+				border: 1px solid #cccccc;
+				width: 250px;
+				border-radius: 10px;
+				padding: 10px;
+				margin: 50px auto;
+				display: block;
+			}
+			#metawidget button {
+				display: block;
+				margin: 10px auto 0px;
+			}
+		</style>
+	</head>
+	<body ng-controller="myController">
+		<p>
+			For documentation, see <a href="http://blog.kennardconsulting.com/2013/08/how-to-generate-ui-from-json-objects.html">this blog post</a>
+		</p>	
+		<metawidget id="metawidget" ng-model="person">
+			<button ng-click="save()">Save</button>
+		</metawidget>
+	</body>
+</html>

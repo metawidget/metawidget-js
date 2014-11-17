@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script src="http://metawidget.org/js/4.0/metawidget-core.min.js"></script>
+		<style>
+			p {
+				text-align: center;
+			}
+			#metawidget {
+				border: 1px solid #cccccc;
+				width: 250px;
+				border-radius: 10px;
+				padding: 10px;
+				margin: 50px auto;
+			}			
+			#metawidget button {
+				display: block;
+				margin: 10px auto 0px;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			For documentation, see <a href="http://blog.kennardconsulting.com/2013/07/generate-ui-from-json.html">this blog post</a>
+		</p>
+		<div id="metawidget">
+			<button onclick="save()">Save</button>
+		</div>
+		<script type="text/javascript">
+			var mw = new metawidget.Metawidget( document.getElementById( 'metawidget' ) );
+			mw.toInspect = {
+				firstname: 'Homer',
+				surname: 'Simpson',
+				age: 36
+			};
+			mw.buildWidgets();
+			function save() {
+	
+				mw.getWidgetProcessor( function( widgetProcessor ) {
+	
+					return widgetProcessor instanceof metawidget.widgetprocessor.SimpleBindingProcessor;
+				} ).save( mw );
+				console.log( mw.toInspect );
+			}
+		</script>
+	</body>
+</html>

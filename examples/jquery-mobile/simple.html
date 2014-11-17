@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css" />
+		<script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+		<script src="http://metawidget.org/js/4.0/metawidget-core.min.js" type="text/javascript"></script>
+		<script src="http://metawidget.org/js/4.0/metawidget-jquerymobile.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+
+			var person = {
+				name: 'Homer Simpson',
+				age: 36,
+				retired: true
+			};
+
+			$( document ).on( 'pageinit', '#page', function( event ) {
+				var page = $( event.target );
+				var mw = $( "#metawidget" );
+				mw.metawidget();
+				mw.metawidget( "buildWidgets", person );
+			} );
+
+			save = function( event ) {
+
+				var page = $( event ).parents( 'article' );
+				var mw = page.find( '#metawidget' );
+
+				var processor = mw.metawidget( "getWidgetProcessor", function( widgetProcessor ) {
+					return widgetProcessor instanceof metawidget.widgetprocessor.SimpleBindingProcessor;
+				} );
+				processor.save( mw.data( 'metawidget' ) );
+				console.log( person );
+			}
+		</script>
+	</head>
+	<body>
+		<article id="page" data-role="page">
+			<section data-role="content">
+				<p>
+					For documentation, see <a href="http://blog.kennardconsulting.com/2013/12/jquery-mobile-ui-generator.html">this blog post</a>
+				</p>
+				<div id="metawidget" data-role="metawidget"></div>
+			</section>
+			<footer data-role="footer" data-position="fixed" data-tap-toggle="false" data-transition="none">
+				<div id="footer-navbar" data-role="navbar">
+					<ul>
+						<li><a data-icon="check" data-iconpos="top" onclick="save( this )">Save</a></li>
+					</ul>
+				</div>
+			</footer>
+		</article>
+	</body>
+</html>

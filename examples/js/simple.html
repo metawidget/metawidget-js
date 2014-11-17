@@ -1,0 +1,33 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<script src="http://metawidget.org/js/4.0/metawidget-core.min.js"></script>
+		<style>
+			p {
+				text-align: center;
+			}		
+			#metawidget {
+				border: 1px solid #cccccc;
+				width: 250px;
+				border-radius: 10px;
+				padding: 10px;
+				margin: 50px auto;
+			}
+		</style>
+	</head>
+	<body>
+		<p>
+			For documentation, see <a href="http://blog.kennardconsulting.com/2013/07/generate-ui-from-json.html">this blog post</a>
+		</p>
+		<div id="metawidget"></div>
+		<script type="text/javascript">
+			var mw = new metawidget.Metawidget( document.getElementById( 'metawidget' ));
+			mw.toInspect = {
+				firstname: 'Homer',
+				surname: 'Simpson',
+				age: 36
+			};
+			mw.buildWidgets();
+		</script>
+	</body>
+</html>
