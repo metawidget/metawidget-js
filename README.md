@@ -1,6 +1,6 @@
 # metawidget-js
 
-Metawidget is a pluggable Javascript Form Generator. It comes with plug-ins for many input formats...
+Metawidget is a runtime, pluggable Javascript Form Generator. It comes with plug-ins for many input formats...
 
  * JSON objects
  * JSON Schema
