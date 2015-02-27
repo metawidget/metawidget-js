@@ -34,12 +34,8 @@
 				age: 36
 			};
 			mw.buildWidgets();
-			function save() {
-	
-				mw.getWidgetProcessor( function( widgetProcessor ) {
-	
-					return widgetProcessor instanceof metawidget.widgetprocessor.SimpleBindingProcessor;
-				} ).save( mw );
+			function save() {	
+				mw.save();
 				console.log( mw.toInspect );
 			}
 		</script>
