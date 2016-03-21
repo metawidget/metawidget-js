@@ -1,0 +1,122 @@
+<html ng-app="myApp">
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.2/angular.min.js" type="text/javascript"></script>
+		<script src="http://metawidget.org/js/4.2/metawidget-core.min.js" type="text/javascript"></script>
+		<script src="http://metawidget.org/js/4.2/metawidget-angular.min.js" type="text/javascript"></script>
+		<script type="text/javascript">
+			angular.module( 'myApp', [ 'metawidget' ] )
+				.controller( 'myController', function( $scope ) {
+
+					// This example demonstrates two uses of REST: one for retrieving the schema,
+					// and another for retrieving lookup values.
+					//
+					// Simulate some back-end REST values
+					
+					var restSchema = {
+						properties: {
+							firstname: {
+								type: 'string'
+							},
+							surname: {
+								type: 'string'
+							},
+							age: {
+								type: 'number'
+							},
+							occupation: {
+								restLookup: 'occupations'
+							}
+						}
+					}
+					
+					var restLookup = {
+						occupations: [ {
+							id: 'A',
+							name: 'Accountant'
+						}, {
+							id: 'B',
+							name: 'Bartender',
+						}, {
+							id: 'F',
+							name: 'Farmer'
+						}, {
+							id: 'N',
+							name: 'Nuclear Plant Worker'
+						} ]
+					}
+					
+					// Configure Metawidget
+					
+					$scope.myConfig = {
+					
+						inspectionResultProcessors: [ function( inspectionResult, mw, toInspect, type, names ) {
+
+							// Simulate a REST call to retrieve the schema
+							
+							setTimeout( function() {
+
+				                  metawidget.util.combineInspectionResults( inspectionResult, restSchema );
+				                  mw.buildWidgets( inspectionResult );
+							}, 1 );
+
+				            // Return nothing to suspend Metawidget operation until REST call returns
+				         } ],
+				         
+				         widgetBuilder: new metawidget.widgetbuilder.CompositeWidgetBuilder( [
+											new metawidget.widgetbuilder.OverriddenWidgetBuilder(),
+											function( elementName, attributes, mw ) {
+				        	 
+												// Support our custom 'restLookup' attribute. This is used to determine
+												// the REST path to call (simulated by restLookup)
+												
+												if ( attributes.restLookup !== undefined ) {
+	
+													var key = attributes.name + 'Lookup';
+	
+													setTimeout( function() {
+														
+														$scope[key] = restLookup[attributes.restLookup];
+														$scope.$apply();
+													}, 1 );
+	
+													return angular.element( '<select ng-options="item.id as item.name for item in ' + key + '">' )[0];
+												}
+											},
+											new metawidget.widgetbuilder.ReadOnlyWidgetBuilder(),
+											new metawidget.widgetbuilder.HtmlWidgetBuilder() ] )
+					}
+					
+					$scope.person = {};
+
+					$scope.save = function() {
+						console.log( $scope.person );
+					}
+				} );
+		</script>
+		<style>
+			p {
+				text-align: center;
+			}			
+			#metawidget {
+				border: 1px solid #cccccc;
+				width: 275px;
+				border-radius: 10px;
+				padding: 10px;
+				margin: 50px auto;
+				display: block;
+			}
+			#metawidget button {
+				display: block;
+				margin: 10px auto 0px;
+			}
+		</style>
+	</head>
+	<body ng-controller="myController">
+		<p>
+			This example demonstrates two uses of REST: one for retrieving the schema, and another for retrieving lookup values.
+		</p>	
+		<metawidget id="metawidget" ng-model="person" config="myConfig">
+			<button ng-click="save()">Save</button>
+		</metawidget>
+	</body>
+</html>
