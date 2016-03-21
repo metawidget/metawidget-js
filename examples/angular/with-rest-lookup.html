@@ -51,7 +51,9 @@
 					
 						inspectionResultProcessors: [ function( inspectionResult, mw, toInspect, type, names ) {
 
-							// Simulate a REST call to retrieve the schema
+							// Simulate a REST call to retrieve the schema.
+							//
+							// Normally instead of 'setTimeout' you'd use '$http.get'
 							
 							setTimeout( function() {
 
@@ -63,16 +65,20 @@
 				         } ],
 				         
 				         widgetBuilder: new metawidget.widgetbuilder.CompositeWidgetBuilder( [
-											new metawidget.widgetbuilder.OverriddenWidgetBuilder(),
 											function( elementName, attributes, mw ) {
 				        	 
 												// Support our custom 'restLookup' attribute. This is used to determine
-												// the REST path to call (simulated by restLookup)
+												// the REST path to call
 												
 												if ( attributes.restLookup !== undefined ) {
 	
 													var key = attributes.name + 'Lookup';
 	
+													// Simulate a REST call to retrieve the values.
+													//
+													// Normally instead of 'setTimeout' you'd use '$http.get' (and you
+													// wouldn't need to manually call $apply)
+
 													setTimeout( function() {
 														
 														$scope[key] = restLookup[attributes.restLookup];
@@ -82,7 +88,6 @@
 													return angular.element( '<select ng-options="item.id as item.name for item in ' + key + '">' )[0];
 												}
 											},
-											new metawidget.widgetbuilder.ReadOnlyWidgetBuilder(),
 											new metawidget.widgetbuilder.HtmlWidgetBuilder() ] )
 					}
 					
