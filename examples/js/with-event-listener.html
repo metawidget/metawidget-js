@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://metawidget.org/js/4.2/metawidget-core.min.js"></script>
+	</head>
+	<body>
+		<div id="metawidget">
+		</div>
+		<script type="text/javascript">
+			var mw = new metawidget.Metawidget( document.getElementById( 'metawidget' ), {
+				inspector: new metawidget.inspector.CompositeInspector( [
+					new metawidget.inspector.PropertyTypeInspector(),
+					new metawidget.inspector.JsonSchemaInspector( {
+
+						// Insert custom attribute into the metadata
+
+						properties: {
+							surname: {
+								disabledUnless: 'firstname'
+							}
+						}
+					} ) ] ),
+				appendWidgetProcessors: function( widget, elementName, attributes, mw ) {
+
+					// Watch for custom attribute, and add an EventListener
+
+					if ( attributes.disabledUnless !== undefined ) {
+						var triggerWidgetId = metawidget.util.getId( 'property', { name: attributes.disabledUnless }, mw );
+						var triggerWidget = document.getElementById( triggerWidgetId );
+						triggerWidget.addEventListener( 'keyup', function() {
+							widget.disabled = ( triggerWidget.value === '' );
+						} );
+						widget.disabled = true;
+					}
+					return widget;
+				}
+			} );
+
+			mw.toInspect = {
+				firstname: '',
+				surname: ''
+			};
+			mw.buildWidgets();
+		</script>
+	</body>
+</html>
