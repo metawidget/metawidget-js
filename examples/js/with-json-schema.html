@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<script src="http://metawidget.org/js/4.2/metawidget-core.min.js"></script>
+	</head>
+	<body>
+		<div id="metawidget">
+		</div>
+		<script type="text/javascript">
+			var mw = new metawidget.Metawidget( document.getElementById( 'metawidget' ), {
+				inspector: new metawidget.inspector.JsonSchemaInspector( {
+					properties: {
+						firstname: {
+							type: 'string',
+							required: true
+						},
+						surname: {
+							type: 'string',
+							maxLength: 30
+						}
+					}
+				} )
+			} );
+
+			mw.buildWidgets();
+		</script>
+	</body>
+</html>
